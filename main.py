@@ -1,7 +1,7 @@
 import requests
 import selectorlib
 
-
+# Url from where web scrapping will be done
 URL = "https://programmer100.pythonanywhere.com/tours/"
 
 # To make it seem the http request is from a browser and not a script.
@@ -12,9 +12,20 @@ HEADERS = {
 def scrape(url):
     """Scrape the page spurce from the URL"""
     response = requests.get(url, headers=HEADERS)
+
+    # Get source code in text
     source = response.text
     return source
 
+def extract(source):
+    """Extract from the given source according to extraction rule in
+    extract.html"""
+    
+    extractor = selectorlib.Extractor.from_yaml_file("extract.yaml")
+    value = extractor.extract(source)['tours']
+    return value
 
 if __name__ == "__main__":
-    print(scrape(URL))
+    scraped = scrape(URL)
+    extracted = extract(scraped)
+    print(extracted)
