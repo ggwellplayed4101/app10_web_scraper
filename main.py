@@ -43,5 +43,5 @@ if __name__ == "__main__":
     store(extracted)
 
     if extracted != "No upcoming tours":
-        if extracted not in "data.txt":
+        if extracted not in open("data.txt").read():
             send_email()
