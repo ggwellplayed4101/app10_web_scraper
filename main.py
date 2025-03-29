@@ -25,7 +25,14 @@ def extract(source):
     value = extractor.extract(source)['tours']
     return value
 
+def send_email():
+    print("Email was sent!")
+
+
 if __name__ == "__main__":
     scraped = scrape(URL)
     extracted = extract(scraped)
     print(extracted)
+    
+    if extracted != "No upcoming tours":
+            send_email()
