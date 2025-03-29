@@ -40,8 +40,10 @@ if __name__ == "__main__":
     scraped = scrape(URL)
     extracted = extract(scraped)
     print(extracted)
-    store(extracted)
 
+    # Store data if it is not already stored
+    # Send email if it is new tour
     if extracted != "No upcoming tours":
         if extracted not in open("data.txt").read():
+            store(extracted)
             send_email()
