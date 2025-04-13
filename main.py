@@ -1,5 +1,6 @@
 import requests
 import selectorlib
+import time
 
 # Url from where web scrapping will be done
 URL = "https://programmer100.pythonanywhere.com/tours/"
@@ -28,6 +29,7 @@ def extract(source):
 
 
 def send_email():
+    host = ""
     print("Email was sent!")
 
 
@@ -37,13 +39,15 @@ def store(extracted):
 
 
 if __name__ == "__main__":
-    scraped = scrape(URL)
-    extracted = extract(scraped)
-    print(extracted)
+    while True:
+        scraped = scrape(URL)
+        extracted = extract(scraped)
+        print(extracted)
 
-    # Store data if it is not already stored
-    # Send email if it is new tour
-    if extracted != "No upcoming tours":
-        if extracted not in open("data.txt").read():
-            store(extracted)
-            send_email()
+        # Store data if it is not already stored
+        # Send email if it is new tour
+        if extracted != "No upcoming tours":
+            if extracted not in open("data.txt").read():
+                store(extracted)
+                send_email()
+    time.sleep(2)
